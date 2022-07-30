@@ -15,7 +15,6 @@ defmodule Game do
     |> parse_input()
     |> pickup_number()
     |> play()
-    |> IO.inspect()
   end
 
   def play(picked_num) do
@@ -39,6 +38,17 @@ defmodule Game do
 
   def guess(_,_, count) do
     IO.puts("You WIN!!! Congratulations!\nNumber of attempts: #{count}")
+    show_score(count)
+  end
+
+  def show_score(guesses) do
+    {_, msg} = %{1..1 => "You're amazing!",
+                 2..4 => "Really nice!",
+                 5..6 => "You cando do better than that."}
+                |> Enum.find(fn {range, _} ->
+                   Enum.member?(range, guesses)
+                end)
+    IO.puts(msg)
   end
 
   def pickup_number(level) do
